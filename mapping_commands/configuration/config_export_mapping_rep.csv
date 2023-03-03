@@ -1,0 +1,7 @@
+tap_tip-banana,tap_middle-watermelon,tap_base-blackberry,swipe_up-kiwi,swipe_down-plum,flex_up-cherry,flex_down-pineapple
+tap_tip-pineapple,tap_middle-blackberry,tap_base-cherry,swipe_up-plum,swipe_down-banana,flex_up-kiwi,flex_down-watermelon
+tap_tip-cherry,tap_middle-pineapple,tap_base-blackberry,swipe_up-watermelon,swipe_down-kiwi,flex_up-plum,flex_down-banana
+tap_tip-kiwi,tap_middle-cherry,tap_base-watermelon,swipe_up-banana,swipe_down-plum,flex_up-pineapple,flex_down-blackberry
+tap_tip-blackberry,tap_middle-watermelon,tap_base-plum,swipe_up-pineapple,swipe_down-kiwi,flex_up-banana,flex_down-cherry
+tap_tip-plum,tap_middle-blackberry,tap_base-banana,swipe_up-watermelon,swipe_down-cherry,flex_up-kiwi,flex_down-pineapple
+tap_tip-watermelon,tap_middle-plum,tap_base-blackberry,swipe_up-kiwi,swipe_down-cherry,flex_up-pineapple,flex_down-banana
