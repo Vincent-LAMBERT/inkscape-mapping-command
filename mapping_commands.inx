@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Diversify Microgesture Representation</_name>
-    <id>com.lambevin.microgesture.diversify</id>
-    <dependency type="executable" location="extensions">diversify_export/diversify_export.py</dependency>
+    <_name>Map Commands</_name>
+    <id>com.lambevin.microgesture.mapping</id>
+    <dependency type="executable" location="extensions">mapping_commands/mapping_commands.py</dependency>
 	<param name="help" type="description">Diversify visible microgestures</param>
     <param name="path" type="string" _gui-text="Choose path to export">~/</param>
     <param name="filetype" type="optiongroup" gui-text="Export layers as..." appearance="minimal">
@@ -12,7 +12,8 @@
     </param>
     <param name="temp" type="boolean" _gui-text="SVG files used to export are temporary">true</param>
     <param name="dpi" type="float" min="0.0" max="1000.0" _gui-text="Export DPI">300</param>
-    <param name="config" type="string" _gui-text="Export Configuration File (Optional - Computed only if CSV file)">~/</param>
+    <param name="config" type="string" _gui-text="Export Configuration File">~/</param>
+    <param name="icon" type="string" _gui-text="Command Icons Folder">~/</param>
     <param name="debug" type="boolean" _gui-text="Debug mode (verbose logging)">false</param>
     <effect needs-live-preview="false">
         <object-type>all</object-type>
@@ -21,6 +22,6 @@
         </effects-menu>
     </effect>
     <script>
-        <command reldir="extensions" interpreter="python">diversify_export/diversify_export.py</command>
+        <command reldir="extensions" interpreter="python">mapping_commands/mapping_commands.py</command>
     </script>
 </inkscape-extension>

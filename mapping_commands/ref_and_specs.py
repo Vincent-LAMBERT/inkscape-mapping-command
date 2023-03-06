@@ -120,14 +120,14 @@ class MicrogestureExportSpec(object):
         
         spec = layer.source.attrib[MicrogestureExportSpec.ATTR_ID]
         
-        g_split = spec.split(",").replace(" ", "")
+        g_split = spec.split(",")
 
         if len(g_split) != 2 :
             raise RuntimeError(f"layer '{layer.label}'(#{layer.id}) has an invalid value '{spec}'. " +
                                 f"Expected value is of the form '[microgesture],[characteristic]'")
         
-        microgesture = g_split[0]
-        charac = g_split[1]
+        microgesture = g_split[0].replace(" ", "")
+        charac = g_split[1].replace(" ", "")
         
         if microgesture not in MICROGESTURES :
             raise RuntimeError(f"layer '{layer.label}'(#{layer.id}) has an invalid value '{microgesture}'. " +

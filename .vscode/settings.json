@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./diversify_export",
+        "./mapping_commands",
+        "./mapping_commands"
+    ]
+}

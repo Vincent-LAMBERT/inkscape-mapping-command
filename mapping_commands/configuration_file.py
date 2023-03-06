@@ -82,12 +82,22 @@ def get_mapping_name(mapping) :
         name += f"{mg_charac[0]}_{mg_charac[1]}-{command}_"
     return name[:-1]
 
+def get_mapping_commands(mapping, logit) :
+    """
+    Return the commands corresponding to the given mapping
+    of the form [((microgesture1, characteristic1), command1), 
+    (microgesture2, characteristic2), command2), ...]}
+    """
+    commands = []
+    for mg_charac, command in mapping:
+        commands.append(command)
+    return commands
 
 def compute_default_mappings() :
     """
     Return the command mappings corresponding to the default configuration
     """
-    return [["tap_tip-banana", "tap_middle-watermelon", "tap_base-blackberry", "swipe_up-kiwi", "swipe_down-plum", "flex_up-cherry", "flex_down-pineapple"], ["tap_tip-pineapple", "tap_middle-blackberry", "tap_base-cherry", "swipe_up-plum", "swipe_down-banana", "flex_up-kiwi", "flex_down-watermelon"], ["tap_tip-cherry", "tap_middle-pineapple", "tap_base-blackberry", "swipe_up-watermelon", "swipe_down-kiwi", "flex_up-plum", "flex_down-banana"], ["tap_tip-kiwi", "tap_middle-cherry", "tap_base-watermelon", "swipe_up-banana", "swipe_down-plum", "flex_up-pineapple", "flex_down-blackberry"], ["tap_tip-blackberry", "tap_middle-watermelon", "tap_base-plum", "swipe_up-pineapple", "swipe_down-kiwi", "flex_up-banana", "flex_down-cherry"], ["tap_tip-plum", "tap_middle-blackberry", "tap_base-banana", "swipe_up-watermelon", "swipe_down-cherry", "flex_up-kiwi", "flex_down-pineapple"], ["tap_tip-watermelon", "tap_middle-plum", "tap_base-blackberry", "swipe_up-kiwi", "swipe_down-cherry", "flex_up-pineapple", "flex_down-banana"]]
+    return [[(("tap", "tip"), "banana"), (("tap", "middle"), "watermelon"), (("tap", "base"), "blackberry"), (("swipe", "up"), "kiwi"), (("swipe", "down"), "plum"), (("flex", "up"), "cherry"), (("flex", "down"), "pineapple")], [(("tap", "tip"), "pineapple"), (("tap", "middle"), "blackberry"), (("tap", "base"), "cherry"), (("swipe", "up"), "plum"), (("swipe", "down"), "banana"), (("flex", "up"), "kiwi"), (("flex", "down"), "watermelon")], [(("tap", "tip"), "cherry"), (("tap", "middle"), "pineapple"), (("tap", "base"), "blackberry"), (("swipe", "up"), "watermelon"), (("swipe", "down"), "kiwi"), (("flex", "up"), "plum"), (("flex", "down"), "banana")], [(("tap", "tip"), "kiwi"), (("tap", "middle"), "cherry"), (("tap", "base"), "watermelon"), (("swipe", "up"), "banana"), (("swipe", "down"), "plum"), (("flex", "up"), "pineapple"), (("flex", "down"), "blackberry")], [(("tap", "tip"), "blackberry"), (("tap", "middle"), "watermelon"), (("tap", "base"), "plum"), (("swipe", "up"), "pineapple"), (("swipe", "down"), "kiwi"), (("flex", "up"), "banana"), (("flex", "down"), "cherry")], [(("tap", "tip"), "plum"), (("tap", "middle"), "blackberry"), (("tap", "base"), "banana"), (("swipe", "up"), "watermelon"), (("swipe", "down"), "cherry"), (("flex", "up"), "kiwi"), (("flex", "down"), "pineapple")], [(("tap", "tip"), "watermelon"), (("tap", "middle"), "plum"), (("tap", "base"), "blackberry"), (("swipe", "up"), "kiwi"), (("swipe", "down"), "cherry"), (("flex", "up"), "pineapple"), (("flex", "down"), "banana")]]
 
 def get_mappings(file_path, logit) :
     """

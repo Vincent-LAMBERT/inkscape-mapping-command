@@ -58,7 +58,8 @@ class CommandExport(inkex.Effect):
                                      help='Exported file type. One of [png|jpeg|pdf]')
         self.arg_parser.add_argument("--dpi", type=float, dest="dpi", default=90.0, help="DPI of exported image")
         self.arg_parser.add_argument("--temp", type=inkex.Boolean, dest="temp", default=True, help="SVG files used to export are temporary")
-        self.arg_parser.add_argument("--config", type=str, dest="config", default="~/", help="Configuration file used to export (Optional)")
+        self.arg_parser.add_argument("--config", type=str, dest="config", default="~/", help="Configuration file used to export")
+        self.arg_parser.add_argument("--icon", type=str, dest="icon", default="~/", help="Icon folder")
         self.arg_parser.add_argument("--debug", type=inkex.Boolean, dest="debug", default=False, help="Debug mode (verbose logging)")
     
     def effect(self):
@@ -137,7 +138,7 @@ class CustomNamedTemporaryFile:
             # Open the file in the given mode
             self._tempFile = open(file_name, self._mode)
         else : # Otherwise, use the standard NamedTemporaryFile.
-            self._tempFile = tempfile.NamedTemporaryFile(suf)
+            self._tempFile = tempfile.NamedTemporaryFile(self.suffix)
         return self._tempFile
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -155,7 +156,7 @@ class CustomNamedTemporaryFile:
 
 def _main():
     logging.warning(f"Running Python interpreter: {sys.executable}")
-    effect = DiversifyExport()
+    effect = CommandExport()
     effect.run()
     exit()
 

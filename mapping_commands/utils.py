@@ -71,7 +71,7 @@ MARKER_TYPES_CORRESPONDANCE = { TAP : [TRAJ_START, TRAJ_END, ACTUATOR, RECEIVER]
 MARKER_TYPES=[TRAJ_START, TRAJ_END, ACTUATOR, RECEIVER]
 
 COORDINATES = "coordinates"
-RADIUS = "r"
+CIRCLE_RADIUS = "r"
 
 PNG="png"
 JPG="jpg"
@@ -95,7 +95,6 @@ START = 'start'
 END = 'end'
 CONTROL_1 = 'control1'
 CONTROL_2 = 'control2'
-RADIUS = 'radius'
 
 STROKE = "stroke"
 FILL = "fill"
@@ -130,6 +129,14 @@ BLACKBERRY = "blackberry"
 PLUM = "plum"
 WATERMELON = "watermelon"
 COMMANDS = [BANANA, PINEAPPLE, CHERRY, KIWI, BLACKBERRY, PLUM, WATERMELON]
+
+LEFT = "left"
+RIGHT = "right"
+BELOW = "below"
+START = "start"
+CENTER = "center"
+END = "end"
+TEXT_ALIGNS = {RIGHT : START, LEFT : END, BELOW : CENTER}
 
 #######################################################################################################################
 
