@@ -138,6 +138,9 @@ CENTER = "center"
 END = "end"
 TEXT_ALIGNS = {RIGHT : START, LEFT : END, BELOW : CENTER}
 
+MIDDLE = "middle"
+TEXT_ANCHORS = {RIGHT : START, LEFT : END, BELOW : MIDDLE}
+
 #######################################################################################################################
 
 def get_microgestures_with_charac(combinations) :

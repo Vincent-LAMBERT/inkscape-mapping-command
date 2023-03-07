@@ -57,35 +57,7 @@ def get_command_names(mappings, logit):
             if command not in command_names :
                 command_names.append(command)
     return command_names
-
-def add_command_to_layer(layer_ref, new_command, logit):
-    """
-    Add a command to a layer
-    """
-    # Find child of layer with 'mgrep-path-element' with 
-    # the value of 'start-command', 'end-command' or 'command'
-    start_command = layer_ref.source.find(f".//*[@mgrep-path-element='start-command']")
-    end_command = layer_ref.source.find(f".//*[@mgrep-path-element='end-command']")
-    command = layer_ref.source.find(f".//*[@mgrep-path-element='command']")
     
-    commands = [start_command, end_command, command]
-    
-    for cmd in commands :
-        if cmd is not None :
-            # Insert the new command before the current command
-            parent_cmd = cmd.getparent()
-            parent_cmd.insert(parent_cmd.index(cmd), new_command)
-        
-    # The text origin and transform matrix is 
-    # overwritten by the insertion. 
-    # Thus we have to use markers and move each 
-    # text to the corresponding location after 
-    # the template insertion
-    text_marker_pairs = get_text_marker_pairs(new_command, logit)
-    logit(f"Text marker pairs : {text_marker_pairs}")
-    for text, marker in text_marker_pairs :
-        move_text_to_marker(text, marker, logit)
-        
 def get_text_marker_pairs(command, logit):
     """
     Get a list of text and marker pairs
@@ -114,12 +86,13 @@ def move_text_to_marker(text, marker, logit):
     # Set the new transform matrix
     set_transform_matrix(text, TS_matrix)
     
+    # Get the textspan which is the child of the text
+    textspan = text.find('svg:tspan', namespaces=inkex.NSS)
     # Adjust the text-align style
-    text_style = text.get('style')
+    text_style = textspan.get('style')
     text_type =  text.attrib['mgrep-command'].split(",")[1].replace(" ", "")
-    text_align = TEXT_ALIGNS[text_type]
-    new_style = compute_new_style(text_style, {'text-align' : text_align}, logit)
-    text.set('style', new_style)
+    new_style = f"text-align:{TEXT_ALIGNS[text_type]};text-anchor:{TEXT_ANCHORS[text_type]}"
+    textspan.set('style', new_style)
     
 def get_transform_matrix(element, logit):
     """
@@ -139,7 +112,9 @@ def set_transform_matrix(element, TS_matrix):
     matrix = [[x for x in row] for row in TS_matrix]
     transform._set_matrix(matrix)
     # Set the new transform matrix
-    element.set('transform', transform)
+    hexad = list(transform.to_hexad())
+    new_transform = f"matrix({hexad[0]},{hexad[1]},{hexad[2]},{hexad[3]},{hexad[4]},{hexad[5]})"
+    element.set('transform', new_transform)
 
 def reset_commands(layer_ref):
     """
@@ -162,6 +137,65 @@ def compute_new_style(original_style, style_combination, logit) :
             else :
                 new_style += f"{key}:{value};"
     return new_style
+
+#######################################################################################################################
+
+def add_command_to_layer(layer_ref, new_command, logit):
+    """
+    Add a command to a layer
+    """
+    # Find child of layer with 'mgrep-path-element' with 
+    # the value of 'start-command', 'end-command' or 'command'
+    start_command = layer_ref.source.find(f".//*[@mgrep-path-element='start-command']")
+    end_command = layer_ref.source.find(f".//*[@mgrep-path-element='end-command']")
+    command = layer_ref.source.find(f".//*[@mgrep-path-element='command']")
+    
+    commands = [start_command, end_command, command]
+    
+    for cmd in commands :
+        if cmd is not None :
+            # Insert the new command before the current command
+            move_command_to_placeholder(cmd, new_command, logit)
+    
+    # The text origin and transform matrix is 
+    # overwritten by the insertion. 
+    # Thus we have to use markers and move each 
+    # text to the corresponding location after 
+    # the template insertion
+    text_marker_pairs = get_text_marker_pairs(new_command, logit)
+    for text, marker in text_marker_pairs :
+        move_text_to_marker(text, marker, logit)
+            
+def move_command_to_placeholder(command_placeholder, new_command, logit):
+    """
+    Move the command to the placeholder
+    """
+    # Get the centroid of the placeholder in the document
+    placeholder_centroid = np.array([float(command_placeholder.get('cx')), float(command_placeholder.get('cy'))])
+    
+    # Get the centroid of the command icon template
+    command = new_command.find(".//*[@mgrep-icon='template']")
+    command_centroid = np.array([float(command.get('cx')), float(command.get('cy'))])
+    
+    # Get translation to apply to the command icon to match the centroid of the command icon template        
+    T_matrix = get_translation_matrix(command_centroid, placeholder_centroid)
+    
+    for xml in new_command.findall(".//{*}path") :
+        parsed_path = svg.path.parse_path(xml.get("d"))
+        parsed_path = apply_matrix_to_path(parsed_path, [], T_matrix, logit)
+        xml.set('d', parsed_path.d())
+    for xml in new_command.findall(".//{*}circle") :
+        path_cx = xml.get("cx")
+        path_cy = xml.get("cy")
+        circle = compute_point_transformation(convert_to_complex(path_cx, path_cy), [], T_matrix, logit)
+        xml.set("cx", str(circle.real))
+        xml.set("cy", str(circle.imag))
+        
+    # Add child to the parent of the template layer
+    # The +1 is to insert the icon above the template
+    #element to make our icon visible
+    parent = command_placeholder.getparent()
+    parent.insert(parent.index(command_placeholder)+1, new_command)
 
 #######################################################################################################################
 
@@ -192,7 +226,7 @@ class ComputeSVG():
         # Get all commands in mappings
         command_names = get_command_names(mappings, logit)
         # Add the command icons to the svg
-        self.command_template_ref = self.get_svg_layers_ref("./Icon.svg", logit)[0]
+        self.command_template_ref = self.get_svg_layers_ref("./Icon/Icon.svg", logit)[0]
         self.icon_SVG_refs = self.get_icon_SVGs_refs(self.export.options.icon, command_names, logit)
         
         for mapping in mappings :
@@ -208,9 +242,9 @@ class ComputeSVG():
         and the command icons
         """
         for mg_charac, command in mapping :
-           command_icon = self.create_command(command, logit)
            mg, charac = mg_charac
            for layer_ref in self.mg_layer_refs[mg][charac] :
+                command_icon = self.create_command(command, logit)
                 add_command_to_layer(layer_ref, command_icon, logit)
                 
     def reset_mapping(self) :
@@ -230,14 +264,23 @@ class ComputeSVG():
         new_command_document = etree.fromstring(etree.tostring(self.command_template_ref.source))
         # Replace the command texts by the command name
         for text in new_command_document.xpath('//svg:text', namespaces=inkex.NSS) :
-            text.text = command
+            textspan = text.xpath('.//svg:tspan', namespaces=inkex.NSS)[0]
+            # Set command name with capitalized first letter
+            textspan.text = command.capitalize()
+            
+        # Hide the markers
+        marker_left = new_command_document.find('.//svg:circle[@mgrep-command="marker, left"]', namespaces=inkex.NSS)
+        marker_right = new_command_document.find('.//svg:circle[@mgrep-command="marker, right"]', namespaces=inkex.NSS)
+        marker_below = new_command_document.find('.//svg:circle[@mgrep-command="marker, below"]', namespaces=inkex.NSS)
+        marker_left.set("style", "display:none")
+        marker_right.set("style", "display:none")
+        marker_below.set("style", "display:none")
         
-        # Hide the left and right texts
+        # Hide the left and right texts for testing purposes
         left = new_command_document.xpath('//svg:text[@mgrep-command="text, left"]', namespaces=inkex.NSS)[0]
         right = new_command_document.xpath('//svg:text[@mgrep-command="text, right"]', namespaces=inkex.NSS)[0]
-        
-        # left.set("style", "display:none")
-        # right.set("style", "display:none")
+        left.set("style", "display:none")
+        right.set("style", "display:none")
         
         # Get the centroid of the command icon template
         template = new_command_document.xpath('//svg:circle[@mgrep-icon="template"]', namespaces=inkex.NSS)[0]
@@ -291,6 +334,8 @@ class ComputeSVG():
             commands[command] = icon_SVG
             
         return commands
+        
+    ###############################
     
     def get_document_layer_refs(self, logit) -> list:
         """

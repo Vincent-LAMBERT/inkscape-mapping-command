@@ -24,13 +24,13 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="11.313709"
-     inkscape:cx="76.721085"
-     inkscape:cy="29.389125"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-7"
-     inkscape:window-y="-6"
+     inkscape:zoom="22.627418"
+     inkscape:cx="95.127955"
+     inkscape:cy="42.00656"
+     inkscape:window-width="1440"
+     inkscape:window-height="890"
+     inkscape:window-x="214"
+     inkscape:window-y="1073"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer2" />
   <defs
@@ -93,54 +93,54 @@
       <text
          xml:space="preserve"
          id="text3808"
-         style="font-size:9.33333px;text-align:center;white-space:pre;shape-inside:url(#rect3810);display:inline;fill:#000000;fill-opacity:1;stroke-width:3.77953;stroke-linecap:square"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.3334px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;white-space:pre;shape-inside:url(#rect3810);display:inline;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.56693;stroke-linecap:square;stroke-dasharray:none;stroke-opacity:1"
          inkscape:label="Below"
          mgrep-command="text, below"
          transform="matrix(0.264583,0,0,0.264583,-2.01745,-5.93945)"><tspan
-           x="79.253679"
-           y="61.992165"
-           id="tspan1054">Command</tspan></text>
+           x="69.530437"
+           y="65.510119"
+           id="tspan2801">Command</tspan></text>
       <text
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,10.469823,-10.735023)"
          id="text3909"
-         style="font-size:9.33333px;text-align:start;white-space:pre;shape-inside:url(#rect3911);display:inline;fill:#000000;fill-opacity:1;stroke-width:3.77953;stroke-linecap:square"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.3333px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:start;white-space:pre;shape-inside:url(#rect3911);display:inline;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.566929;stroke-linecap:square;stroke-dasharray:none;stroke-opacity:1"
          inkscape:label="Right"
          mgrep-command="text, right"><tspan
            x="69.5"
-           y="61.992165"
-           id="tspan1056">Command</tspan></text>
+           y="65.510029"
+           id="tspan2803">Command</tspan></text>
       <text
          xml:space="preserve"
          id="text3909-8"
-         style="font-size:9.33333px;text-align:end;white-space:pre;shape-inside:url(#rect3911-9);display:inline;fill:#000000;fill-opacity:1;stroke-width:3.77953;stroke-linecap:square"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.3334px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:end;white-space:pre;shape-inside:url(#rect3911-9);display:inline;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.56693;stroke-linecap:square;stroke-dasharray:none;stroke-opacity:1"
          inkscape:label="Left"
          mgrep-command="text, left"
-         transform="matrix(0.264583 0 0 0.264583 -16.9429 -10.7353)"><tspan
-           x="98.200717"
-           y="61.992165"
-           id="tspan1058">Command</tspan></text>
+         transform="matrix(0.264583,0,0,0.264583,-16.9429,-10.7353)"><tspan
+           x="78.754232"
+           y="65.510119"
+           id="tspan2805">Command</tspan></text>
       <circle
          style="fill:#2c0fbd;stroke-width:1;stroke-linecap:square"
          id="path987"
-         cx="24.965574"
-         cy="10.421337"
+         cx="24.942188"
+         cy="11.403553"
          r="0.40925646"
          inkscape:label="BelowMarker"
          mgrep-command="marker, below" />
       <circle
          style="fill:#2c0fbd;stroke-width:1;stroke-linecap:square"
          id="path987-9"
-         cx="28.831316"
-         cy="5.9861979"
+         cx="28.878088"
+         cy="6.6059294"
          r="0.40925646"
          inkscape:label="RightMarker"
          mgrep-command="marker, right" />
       <circle
          style="fill:#2c0fbd;stroke-width:1;stroke-linecap:square"
          id="path987-9-6"
-         cx="21.083984"
-         cy="5.9861979"
+         cx="21.07229"
+         cy="6.5825429"
          r="0.40925646"
          inkscape:label="LeftMarker"
          mgrep-command="marker, left" />
